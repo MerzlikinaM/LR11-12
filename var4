@@ -1,0 +1,12 @@
+# Рекурсивный разворот строки
+def reverse_string(s):
+  
+    # Базовый случай
+    if len(s) <= 1:
+        return s
+    # Рекурсивный случай
+    return s[-1] + reverse_string(s[:-1])
+
+# Тестирование
+print(reverse_string("hello"))  # Вывод: "olleh"
+print(reverse_string("a"))      # Вывод: "a"
