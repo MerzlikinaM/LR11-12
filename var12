@@ -1,0 +1,26 @@
+# Генерация всех сочетаний размера k из n элементов
+def generate_combinations(n, k, start=1, current=None, result=None):
+   
+    if current is None:
+        current = []
+    if result is None:
+        result = []
+    
+    # Базовый случай: набрано k элементов
+    if len(current) == k:
+        result.append(current[:])
+        return
+    
+    # Рекурсивный случай: перебираем числа от start до n
+    for i in range(start, n + 1):
+        current.append(i)
+        generate_combinations(n, k, i + 1, current, result)
+        current.pop()  # Backtrack
+    return result
+
+# Тестирование
+combinations = generate_combinations(4, 2)
+print("Сочетания из 4 по 2:")
+for comb in combinations:
+    print(comb)
+
