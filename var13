@@ -1,0 +1,54 @@
+# Задача о 8 ферзях
+def solve_n_queens(n=8):
+
+    def is_safe(queens, row, col):
+        """Проверяет, безопасно ли поставить ферзя в (row, col)"""
+        for i in range(row):
+            # Проверка столбца и диагоналей
+            if queens[i] == col or \
+               abs(queens[i] - col) == abs(i - row):
+                return False
+        return True
+    
+    def backtrack(row, queens, solutions):
+        """Рекурсивная функция для поиска решений"""
+        # Базовый случай: все ферзи расставлены
+        if row == n:
+            solutions.append(queens[:])  # Важно: делаем копию списка!
+            return
+        
+        # Пробуем каждый столбец в текущей строке
+        for col in range(n):
+            if is_safe(queens, row, col):
+                queens[row] = col  # Ставим ферзя
+                backtrack(row + 1, queens, solutions)  # Рекурсия
+                # Backtrack не нужен, так как мы перезаписываем значение
+    
+    solutions = []
+    queens = [-1] * n  # queens[i] = столбец ферзя в строке i
+    backtrack(0, queens, solutions)
+    return solutions
+
+def print_solution(queens):
+    """Выводит одно решение в виде доски"""
+    n = len(queens)
+    for i in range(n):
+        row = ['Q' if queens[i] == j else '.' for j in range(n)]
+        print(' '.join(row))
+    print()
+
+# Тестирование
+solutions = solve_n_queens(8)
+print(f"Найдено решений для 8 ферзей: {len(solutions)}")
+
+# Выводим первое решение
+if solutions:
+    print("Первое решение:")
+    print_solution(solutions[0])
+    
+    # Выводим еще 2 решения для демонстрации
+    print("Второе решение:")
+    print_solution(solutions[1])
+    
+    print("Третье решение:")
+    print_solution(solutions[2])
