@@ -1,0 +1,43 @@
+# DFS с временем входа и выхода
+def dfs_with_timestamps(graph, start):
+   
+    visited = [False] * len(graph)
+    entry_time = [0] * len(graph)
+    exit_time = [0] * len(graph)
+    timer = [0]  # Используем список для передачи по ссылке
+    
+    def dfs(u):
+        visited[u] = True
+        entry_time[u] = timer[0]
+        timer[0] += 1
+        
+        print(f"Входим в вершину {u}, время входа: {entry_time[u]}")
+        
+        # Рекурсивно посещаем всех соседей
+        for v in graph[u]:
+            if not visited[v]:
+                dfs(v)
+        
+        exit_time[u] = timer[0]
+        timer[0] += 1
+        print(f"Выходим из вершины {u}, время выхода: {exit_time[u]}")
+    
+    dfs(start)
+    return entry_time, exit_time
+
+# Тестирование
+# Граф в виде списка смежности (5 вершин)
+graph = [
+    [1, 2],     # Вершина 0 соединена с 1 и 2
+    [0, 3, 4],  # Вершина 1 соединена с 0, 3, 4
+    [0, 4],     # Вершина 2 соединена с 0, 4
+    [1],        # Вершина 3 соединена с 1
+    [1, 2]      # Вершина 4 соединена с 1 и 2
+]
+
+print("DFS с временем входа/выхода:")
+entry, exit = dfs_with_timestamps(graph, 0)
+
+print("\nИтоговые времена:")
+for i in range(len(graph)):
+    print(f"Вершина {i}: вход={entry[i]}, выход={exit[i]}")
